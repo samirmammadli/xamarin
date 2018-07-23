@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:test"
+             x:Class="test.MainPage">
+
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0">Samir</Label>
+            <Button Grid.Row="1" Text="Sample"></Button>
+        </Grid>
+        <!-- Place new controls here -->
+        <Label TextColor="Red"
+               Text="Zdravstvuyte lyudiiii" 
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand" />
+        <Button Text="Push me, brat"/>
+    </StackLayout>
+
+</ContentPage>
