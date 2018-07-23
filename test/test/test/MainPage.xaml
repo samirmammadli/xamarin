@@ -5,20 +5,19 @@
              x:Class="test.MainPage">
 
     <StackLayout>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0">Samir</Label>
-            <Button Grid.Row="1" Text="Sample"></Button>
-        </Grid>
         <!-- Place new controls here -->
         <Label TextColor="Red"
-               Text="Zdravstvuyte lyudiiii" 
+               Text="Zdravstvuytdwdwe lyudiiii" 
                HorizontalOptions="Center"
-               VerticalOptions="CenterAndExpand" />
-        <Button Text="Push me, brat"/>
+               VerticalOptions="Start" /> 
+        <Button Margin="45" Text="Push me, brat"/>
+        <Picker Title="Pick me">
+            <Picker.Items>
+                <x:String>One</x:String>
+                <x:String>Two</x:String>
+                <x:String>Three</x:String>
+            </Picker.Items>
+        </Picker>
     </StackLayout>
 
 </ContentPage>
