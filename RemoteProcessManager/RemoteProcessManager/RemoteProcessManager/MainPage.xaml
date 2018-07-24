@@ -5,11 +5,11 @@
              x:Class="RemoteProcessManager.MainPage">
 
     <StackLayout>
-        <Entry Text="{Binding IpInput, Mode=TwoWay}" WidthRequest="200"
+        <Entry x:Name="loshad" Text="{Binding Path=IpInput, Mode=TwoWay}" WidthRequest="200"
            VerticalOptions="Center" 
            HorizontalOptions="Center" />
-        <Label Text="{Binding IpInput}" WidthRequest="321" FontSize="34"/>
-        <Button Text="ok"></Button>
+        <Label x:Name="lbOutput" BindingContext="{x:Reference Name=loshad}" Text="{Binding Path=Text}" WidthRequest="321" FontSize="34"/>
+        <Button Clicked="OnClicked" x:Name="tbOk" Text="ok"></Button>
     </StackLayout>
     
     

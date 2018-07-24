@@ -26,8 +26,6 @@ namespace RemoteProcessManager.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::MvvmLightNavigationExtension.Droid.Resource.String.ApplicationName = global::RemoteProcessManager.Droid.Resource.String.ApplicationName;
-			global::MvvmLightNavigationExtension.Droid.Resource.String.Hello = global::RemoteProcessManager.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::RemoteProcessManager.Droid.Resource.Attribute.actionBarSize;
 		}
 		
@@ -3626,12 +3624,6 @@ namespace RemoteProcessManager.Droid
 		
 		public partial class String
 		{
-			
-			// aapt resource value: 0x7f09003f
-			public const int ApplicationName = 2131296319;
-			
-			// aapt resource value: 0x7f09003e
-			public const int Hello = 2131296318;
 			
 			// aapt resource value: 0x7f090015
 			public const int abc_action_bar_home_description = 2131296277;

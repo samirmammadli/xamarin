@@ -44,12 +44,9 @@ namespace RemoteTaskManager.ViewModel
         public string IpInput
         {
             get => ipInput;
-            set
-            {
-                ipInput = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref ipInput, value);
         }
+
 
         private bool isConnected;
         public bool IsConnected

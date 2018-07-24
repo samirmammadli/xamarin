@@ -16,7 +16,12 @@ namespace RemoteProcessManager
 			InitializeComponent();
             vm = new MainViewModel();
             this.BindingContext = vm;
+        }
 
+        public void OnClicked(object sender, EventArgs e)
+        {
+            DisplayAlert("Title", vm.IpInput, "OK");
+            //vm.IpInput = "govniwe";
         }
 	}
 }
