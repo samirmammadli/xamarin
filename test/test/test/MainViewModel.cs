@@ -16,7 +16,7 @@ namespace RemoteTaskManager.ViewModel
         public MainViewModel()
         {
             IsConnected = false;
-            IpInput = "salam bliat";
+            IpInput = "10.2.26.18";
         }
         static private int _port = 8005;
 
