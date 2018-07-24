@@ -5,19 +5,14 @@
              x:Class="test.MainPage">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label TextColor="Red"
-               Text="Zdravstvuytdwdwe lyudiiii" 
-               HorizontalOptions="Center"
-               VerticalOptions="Start" /> 
-        <Button Margin="45" Text="Push me, brat"/>
-        <Picker Title="Pick me">
-            <Picker.Items>
-                <x:String>One</x:String>
-                <x:String>Two</x:String>
-                <x:String>Three</x:String>
-            </Picker.Items>
-        </Picker>
+        <Entry x:Name="loshad" Text="{Binding Path=IpInput, Mode=TwoWay}" WidthRequest="200"
+           VerticalOptions="Center" 
+           HorizontalOptions="Center" />
+        <Label Text="{Binding Path=IpInput}" WidthRequest="321" FontSize="34"/>
+        <Button x:Name="tbOk" Text="ok"></Button>
+        <TableView>
+            
+        </TableView>
     </StackLayout>
 
 </ContentPage>

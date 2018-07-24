@@ -41,11 +41,17 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClientCommands">
+      <HintPath>..\..\..\RemoteProcessManager\ClientCommands\bin\Debug\ClientCommands.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="TasksInfo">
+      <HintPath>..\..\..\RemoteProcessManager\ClientCommands\bin\Debug\TasksInfo.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2" />
