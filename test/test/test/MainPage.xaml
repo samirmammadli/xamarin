@@ -10,9 +10,9 @@
            VerticalOptions="Center" />
         <StackLayout Orientation="Horizontal">
             <Button Command="{Binding ConnectToServer}" CommandParameter="{Binding IpInput}" Text="Connect" HorizontalOptions="Center"/>
-            <Button Command="{Binding Close1}" Text="Disconnect" HorizontalOptions="Center"/>
+            <Button Command="{Binding CloseConnectionCommand}" Text="Disconnect" HorizontalOptions="Center"/>
         </StackLayout>
-        <ListView ItemsSource="{Binding Processes}" RowHeight="75" HasUnevenRows="False" SeparatorColor="Red">
+        <ListView ItemsSource="{Binding Processes}" RowHeight="75" HasUnevenRows="False" SeparatorColor="Red" SelectedItem="{Binding CurrentProcess}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -36,6 +36,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="Kill Task" Command="{Binding KillCommand}"></Button>
         <!--<dg:DataGrid ItemsSource="{Binding Processes}" ActiveRowColor="Azure" BackgroundColor="White" BorderColor="#CCCCCC" HeaderBackground="#E0E6F8" VerticalOptions="Fill">
             <dg:DataGrid.HeaderFontSize>
                 <OnIdiom  x:TypeArguments="x:Double">

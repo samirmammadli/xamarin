@@ -21,7 +21,7 @@ namespace RemoteTaskManager.ViewModel
         {
             IsConnected = false;
             page = getPage;
-            IpInput = "192.168.5.105";
+            IpInput = "10.2.26.18";
             
         }
         static private int _port = 8005;
@@ -43,7 +43,7 @@ namespace RemoteTaskManager.ViewModel
         public ProcessInfo CurrentProcess
         {
             get => currentProcess;
-            set => Set(ref currentProcess, value);
+            set  { Set(ref currentProcess, value); KillCommand.ChangeCanExecute(); }
         }
 
         private string ipInput;
@@ -58,7 +58,12 @@ namespace RemoteTaskManager.ViewModel
         public bool IsConnected
         {
             get => isConnected;
-            set { Set(ref isConnected, value); ConnectionAllowed = !value; }
+            set
+            {
+                Set(ref isConnected, value);
+                ConnectionAllowed = !value;
+                CloseConnectionCommand.ChangeCanExecute();
+            }
         }
 
         private bool connectionAllowed;
