@@ -6,13 +6,51 @@
              x:Class="test.MainPage">
 
     <StackLayout>
-        <Entry x:Name="tbIp" Placeholder="Enter Ip Address" Text="{Binding Path=IpInput, Mode=TwoWay}" WidthRequest="200"
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
-        <Label Text="{Binding Path=IpInput}" WidthRequest="321" FontSize="34"/>
-        <Button Command="{Binding ConnectToServer}" CommandParameter="{Binding IpInput}" Text="ok"></Button>
-        <Switch IsEnabled="{Binding IsConnected}"></Switch>
-        <dg:DataGrid></dg:DataGrid>
+        <Entry x:Name="tbIp" Placeholder="Enter Ip Address" Text="{Binding Path=IpInput, Mode=TwoWay}" IsEnabled="{Binding ConnectionAllowed}" HorizontalOptions="Fill"
+           VerticalOptions="Center" />
+        <StackLayout Orientation="Horizontal">
+            <Button Command="{Binding ConnectToServer}" CommandParameter="{Binding IpInput}" Text="Connect" HorizontalOptions="Center"/>
+            <Button Command="{Binding Close1}" Text="Disconnect" HorizontalOptions="Center"/>
+        </StackLayout>
+        <ListView ItemsSource="{Binding Processes}" RowHeight="75" HasUnevenRows="False" SeparatorColor="Red">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="ID:"></Label>
+                                    <Label Text="{Binding Id}" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Name:"></Label>
+                                    <Label Text="{Binding ProcessName}" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Memory usage:"></Label>
+                                    <Label Text="{Binding NonpagedSystemMemorySize64}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<dg:DataGrid ItemsSource="{Binding Processes}" ActiveRowColor="Azure" BackgroundColor="White" BorderColor="#CCCCCC" HeaderBackground="#E0E6F8" VerticalOptions="Fill">
+            <dg:DataGrid.HeaderFontSize>
+                <OnIdiom  x:TypeArguments="x:Double">
+                    <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                    <OnIdiom.Phone>13</OnIdiom.Phone>
+                </OnIdiom>
+            </dg:DataGrid.HeaderFontSize>
+            <dg:DataGrid.Columns>
+                <dg:DataGridColumn Title="ID" PropertyName="Id"/>
+                <dg:DataGridColumn Title="Name" PropertyName="ProcessName"/>
+                <dg:DataGridColumn Title="Memory" PropertyName="NonpagedSystemMemorySize64"/>
+            </dg:DataGrid.Columns>
+        </dg:DataGrid>-->
     </StackLayout>
+
+
 
 </ContentPage>

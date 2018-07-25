@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +7,22 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using TasksInfo;
 using TasksManagarCommands;
+using test;
+using Xamarin.Forms;
 
+
+// page.DisplayAlert("Alert", CrossConnectivity.Current.IsConnected.ToString(), "OK");
 namespace RemoteTaskManager.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
-        public MainViewModel()
+        MainPage page;
+        public MainViewModel(MainPage getPage)
         {
             IsConnected = false;
-            IpInput = "10.2.26.18";
+            page = getPage;
+            IpInput = "192.168.5.105";
+            
         }
         static private int _port = 8005;
 
@@ -64,12 +70,12 @@ namespace RemoteTaskManager.ViewModel
 
 
 
-        private RelayCommand getProcesses;
-        public RelayCommand GetProcesses
+        private Command getProcesses;
+        public Command GetProcesses
         {
             get
             {
-                return getProcesses ?? (getProcesses = new RelayCommand(() => GetProcessesFromServer(),
+                return getProcesses ?? (getProcesses = new Command(() => GetProcessesFromServer(),
                 () => IsConnected));
             }
         }
@@ -78,15 +84,16 @@ namespace RemoteTaskManager.ViewModel
         {
             var cmd = new GetProcessesCommand();
             var formatter2 = new BinaryFormatter();
+            if (_stream != null)
             formatter2.Serialize(_stream, cmd);
         }
 
-        private RelayCommand killCommand;
-        public RelayCommand KillCommand
+        private Command killCommand;
+        public Command KillCommand
         {
             get
             {
-                return killCommand ?? (killCommand = new RelayCommand(() =>
+                return killCommand ?? (killCommand = new Command(() =>
                 {
                     var cmd = new KillProcessCommand { CommandParameter = CurrentProcess.Id.ToString() };
                     var formatter2 = new BinaryFormatter();
@@ -96,24 +103,21 @@ namespace RemoteTaskManager.ViewModel
             }
         }
 
-        private RelayCommand closeConnectionCommand;
-        public RelayCommand CloseConnectionCommand
+        private Command closeConnectionCommand;
+        public Command CloseConnectionCommand
         {
             get
             {
-                return closeConnectionCommand ?? (closeConnectionCommand = new RelayCommand(() =>
-                {
-                    CloseConnection();
-                }, () => IsConnected));
+                return closeConnectionCommand ?? (closeConnectionCommand = new Command(CloseConnection, () => IsConnected));
             }
         }
 
-        private RelayCommand<string> startProcessCommand;
-        public RelayCommand<string> StartProcessCommand
+        private Command<string> startProcessCommand;
+        public Command<string> StartProcessCommand
         {
             get
             {
-                return startProcessCommand ?? (startProcessCommand = new RelayCommand<string>(param =>
+                return startProcessCommand ?? (startProcessCommand = new Command<string>(param =>
                 {
                     var cmd = new StartProcess { CommandParameter = param };
                     var formatter2 = new BinaryFormatter();
@@ -122,13 +126,13 @@ namespace RemoteTaskManager.ViewModel
             }
         }
 
-        private RelayCommand<string> connectToServer;
-        public RelayCommand<string> ConnectToServer
+        private Command<string> connectToServer;
+        public Command<string> ConnectToServer
         {
             get
             {
-                return connectToServer ?? (connectToServer = new RelayCommand<string>(param =>
-                Connect(param), param => !IsConnected));
+                return connectToServer ?? (connectToServer = new Command<string>(param =>
+                 Connect(param), param => ConnectionAllowed));
             }
         }
 
@@ -146,6 +150,7 @@ namespace RemoteTaskManager.ViewModel
             {
                 if (_client != null && _client.Client != null) CloseConnection();
                 _client = new TcpClient();
+                _client.SendTimeout = 5000;
                 _client.Connect(ip, _port);
                 _stream = _client.GetStream();
                 IsConnected = true;
@@ -155,7 +160,7 @@ namespace RemoteTaskManager.ViewModel
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                page.DisplayAlert("Alert", ex.Message, "OK");
             }
         }
 
@@ -168,18 +173,17 @@ namespace RemoteTaskManager.ViewModel
                 {
                     try
                     {
-                        var obj = formatter.Deserialize(_stream) as IClientCommand;
+                        var obj = formatter.Deserialize( _stream) as IClientCommand;
                         if (obj != null)
-
                         {
                             if (obj.ResponseObject is List<ProcessInfo>) Processes = (obj.ResponseObject as List<ProcessInfo>).OrderBy(x => x.ProcessName).ToList();
-                            //else if (obj.ResponseObject is string) MessageBox.Show(obj.ResponseObject.ToString());
+                            else if (obj.ResponseObject is string) page.DisplayAlert("Alert", obj.ResponseObject.ToString(), "OK");
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         CloseConnection();
-                        //MessageBox.Show("Disconnected!");
+                        page.DisplayAlert("Alert", ex.Message, "OK");
                         break;
                     }
                 }
