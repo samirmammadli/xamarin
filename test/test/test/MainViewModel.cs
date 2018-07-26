@@ -63,6 +63,7 @@ namespace RemoteTaskManager.ViewModel
                 Set(ref isConnected, value);
                 ConnectionAllowed = !value;
                 CloseConnectionCommand.ChangeCanExecute();
+                GetProcesses.ChangeCanExecute();
             }
         }
 
@@ -143,7 +144,7 @@ namespace RemoteTaskManager.ViewModel
 
         private void CloseConnection()
         {
-            _client.Close();
+            //_client.Close();
             IsConnected = false;
             Processes = null;
             IpInput = string.Empty;
@@ -178,11 +179,12 @@ namespace RemoteTaskManager.ViewModel
                 {
                     try
                     {
-                        var obj = formatter.Deserialize( _stream) as IClientCommand;
+                        IClientCommand obj;
+                        lock (this) { obj = formatter.Deserialize(_stream) as IClientCommand; };
                         if (obj != null)
                         {
                             if (obj.ResponseObject is List<ProcessInfo>) Processes = (obj.ResponseObject as List<ProcessInfo>).OrderBy(x => x.ProcessName).ToList();
-                            else if (obj.ResponseObject is string) page.DisplayAlert("Alert", obj.ResponseObject.ToString(), "OK");
+                            else if (obj.ResponseObject as string != null) page.DisplayAlert("Alert", obj.ResponseObject.ToString(), "OK");
                         }
                     }
                     catch (Exception ex)

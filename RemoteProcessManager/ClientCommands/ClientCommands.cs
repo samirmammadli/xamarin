@@ -34,7 +34,7 @@ namespace TasksManagarCommands
             }
             finally
             {
-                if (stream.CanRead && stream.CanWrite)
+                if (stream != null && stream.CanRead && stream.CanWrite)
                 {
                     var response = new KillProcessCommand() { ResponseObject = result };
                     var formatter = new BinaryFormatter();
@@ -62,19 +62,13 @@ namespace TasksManagarCommands
                 result = "Success!";
                 var process = Process.GetProcessById(Int32.Parse(CommandParameter));
                 process?.Kill();
+                var response = new KillProcessCommand() { ResponseObject = result };
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, response);
             }
             catch (Exception ex)
             {
                 result = ex.Message;
-            }
-            finally
-            {
-                if (stream.CanRead && stream.CanWrite)
-                {
-                    var response = new KillProcessCommand() { ResponseObject = result };
-                    var formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, response);
-                }
             }
         }
 

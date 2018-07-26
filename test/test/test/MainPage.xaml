@@ -4,7 +4,14 @@
              xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
              xmlns:local="clr-namespace:test"
              x:Class="test.MainPage">
-
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#f2966f"/>
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
     <StackLayout>
         <Entry x:Name="tbIp" Placeholder="Enter Ip Address" Text="{Binding Path=IpInput, Mode=TwoWay}" IsEnabled="{Binding ConnectionAllowed}" HorizontalOptions="Fill"
            VerticalOptions="Center" />
@@ -37,6 +44,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button Text="Kill Task" Command="{Binding KillCommand}"></Button>
+        <Button Text="Refresh" Command="{Binding GetProcesses}"></Button>
         <!--<dg:DataGrid ItemsSource="{Binding Processes}" ActiveRowColor="Azure" BackgroundColor="White" BorderColor="#CCCCCC" HeaderBackground="#E0E6F8" VerticalOptions="Fill">
             <dg:DataGrid.HeaderFontSize>
                 <OnIdiom  x:TypeArguments="x:Double">
