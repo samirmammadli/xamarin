@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -83,9 +84,9 @@ namespace TasksManagarCommands
     {
         public string CommandParameter { get; set; }
         public object ResponseObject { get; set; }
-        private List<ProcessInfo> GetProcessesInfo(Process[] processes)
+        private ObservableCollection<ProcessInfo> GetProcessesInfo(Process[] processes)
         {
-            var ProcessesInfo = new List<ProcessInfo>();
+            var ProcessesInfo = new ObservableCollection<ProcessInfo>();
             foreach (var item in processes)
             {
                 try
@@ -104,7 +105,7 @@ namespace TasksManagarCommands
         public void ExecuteCommand(NetworkStream stream)
         {
             Process[] procs = null;
-            List<ProcessInfo> procsInfo = null;
+            ObservableCollection<ProcessInfo> procsInfo = null;
             var formatter = new BinaryFormatter();
             try
             {

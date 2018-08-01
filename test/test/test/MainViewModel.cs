@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -30,8 +31,8 @@ namespace RemoteTaskManager.ViewModel
         private NetworkStream _stream;
 
 
-        private List<ProcessInfo> processes;
-        public List<ProcessInfo> Processes
+        private ObservableCollection<ProcessInfo> processes;
+        public ObservableCollection<ProcessInfo> Processes
         {
             get => processes;
             set => Set(ref processes, value);
@@ -183,7 +184,7 @@ namespace RemoteTaskManager.ViewModel
                         lock (this) { obj = formatter.Deserialize(_stream) as IClientCommand; };
                         if (obj != null)
                         {
-                            if (obj.ResponseObject is List<ProcessInfo>) Processes = (obj.ResponseObject as List<ProcessInfo>).OrderBy(x => x.ProcessName).ToList();
+                            if (obj.ResponseObject is ObservableCollection<ProcessInfo>) Processes = new ObservableCollection<ProcessInfo>((obj.ResponseObject as ObservableCollection<ProcessInfo>).OrderBy(x => x.ProcessName));
                             else if (obj.ResponseObject as string != null) page.DisplayAlert("Alert", obj.ResponseObject.ToString(), "OK");
                         }
                     }
